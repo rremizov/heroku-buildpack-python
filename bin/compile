@@ -17,6 +17,7 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
+source $BUILD_DIR/heroku.conf
 
 CACHED_DIRS=".heroku"
 
@@ -103,8 +104,8 @@ bpwatch start pre_compile
 bpwatch stop pre_compile
 
 # If no requirements given, assume `setup.py develop`.
-if [ ! -f requirements.txt ]; then
-  echo "-e ." > requirements.txt
+if [ ! -r $REQUIREMENTS ]; then
+  echo "-e ." > $REQUIREMENTS
 fi
 
 # Sticky runtimes.
@@ -183,7 +184,7 @@ set-env LIBRARY_PATH /app/.heroku/vendor/lib:/app/.heroku/python/lib
 set-env LD_LIBRARY_PATH '/app/.heroku/vendor/lib:/app/.heroku/python/lib:$LD_LIBRARY_PATH'
 set-default-env LANG en_US.UTF-8
 set-default-env PYTHONHASHSEED random
-set-default-env PYTHONPATH /app/
+set-default-env PYTHONPATH /app/$PROJECT_DIR/
 
 
 # Experimental post_compile hook.

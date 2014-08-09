@@ -14,8 +14,10 @@
 
 BUILD_DIR=$1
 
+source $BUILD_DIR/heroku.conf
+
 # Exit early if app is clearly not Python.
-if [ ! -f $BUILD_DIR/requirements.txt ] && [ ! -f $BUILD_DIR/setup.py ]; then
+if [ ! -f $BUILD_DIR/$REQUIREMENTS ] && [ ! -f $BUILD_DIR/setup.py ]; then
   exit 1
 fi
 
